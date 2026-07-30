@@ -1,3 +1,15 @@
 module github.com/P4rz1val22/outreach-tool
 
 go 1.25.1
+
+require (
+	github.com/arran4/golang-ical v0.3.5 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
+	github.com/jackc/pgx/v5 v5.10.0 // indirect
+	github.com/jackc/puddle/v2 v2.2.2 // indirect
+	github.com/joho/godotenv v1.5.1 // indirect
+	github.com/robfig/cron/v3 v3.0.1 // indirect
+	golang.org/x/sync v0.17.0 // indirect
+	golang.org/x/text v0.29.0 // indirect
+)
