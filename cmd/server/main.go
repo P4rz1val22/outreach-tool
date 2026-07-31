@@ -9,6 +9,8 @@ import (
 	"syscall"
 	"time"
 
+	db "github.com/P4rz1val22/outreach-tool/db/sqlc"
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
 )
@@ -34,6 +36,15 @@ func main() {
 	pool, err := pgxpool.New(ctx, os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatalf("Connection error: %v", err)
+	}
+
+	queries := db.New(pool)
+	someTestUUID := uuid.New()
+	contacts, err := queries.ListContacts(ctx, someTestUUID)
+	if err != nil {
+		log.Printf("ListContacts error: %v", err)
+	} else {
+		log.Printf("ListContacts returned %d rows", len(contacts))
 	}
 
 	// Register handlers
