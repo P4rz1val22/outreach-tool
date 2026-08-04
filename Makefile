@@ -20,7 +20,7 @@ sqlc-gen:
 mock-gen:
 	mockgen -source=db/sqlc/querier.go -destination=mocks/querier_mock.go -package=mocks
 
-generate: sqlc-gen mock-gen
+gen: sqlc-gen mock-gen
 
 db-update: migrate-up generate
 
