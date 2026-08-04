@@ -13,7 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	sqlc "github.com/P4rz1val22/outreach-tool/db/sqlc"
+	db "github.com/P4rz1val22/outreach-tool/db/sqlc"
 	uuid "github.com/google/uuid"
 	gomock "go.uber.org/mock/gomock"
 )
@@ -42,11 +42,69 @@ func (m *MockQuerier) EXPECT() *MockQuerierMockRecorder {
 	return m.recorder
 }
 
+// ArchiveContact mocks base method.
+func (m *MockQuerier) ArchiveContact(ctx context.Context, arg db.ArchiveContactParams) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ArchiveContact", ctx, arg)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// ArchiveContact indicates an expected call of ArchiveContact.
+func (mr *MockQuerierMockRecorder) ArchiveContact(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ArchiveContact", reflect.TypeOf((*MockQuerier)(nil).ArchiveContact), ctx, arg)
+}
+
+// CreateContact mocks base method.
+func (m *MockQuerier) CreateContact(ctx context.Context, arg db.CreateContactParams) (db.Contact, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateContact", ctx, arg)
+	ret0, _ := ret[0].(db.Contact)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateContact indicates an expected call of CreateContact.
+func (mr *MockQuerierMockRecorder) CreateContact(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateContact", reflect.TypeOf((*MockQuerier)(nil).CreateContact), ctx, arg)
+}
+
+// CreateContactMethod mocks base method.
+func (m *MockQuerier) CreateContactMethod(ctx context.Context, arg db.CreateContactMethodParams) (db.ContactMethod, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateContactMethod", ctx, arg)
+	ret0, _ := ret[0].(db.ContactMethod)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateContactMethod indicates an expected call of CreateContactMethod.
+func (mr *MockQuerierMockRecorder) CreateContactMethod(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateContactMethod", reflect.TypeOf((*MockQuerier)(nil).CreateContactMethod), ctx, arg)
+}
+
+// DeleteContactMethod mocks base method.
+func (m *MockQuerier) DeleteContactMethod(ctx context.Context, arg db.DeleteContactMethodParams) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteContactMethod", ctx, arg)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteContactMethod indicates an expected call of DeleteContactMethod.
+func (mr *MockQuerierMockRecorder) DeleteContactMethod(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteContactMethod", reflect.TypeOf((*MockQuerier)(nil).DeleteContactMethod), ctx, arg)
+}
+
 // GetContactByID mocks base method.
-func (m *MockQuerier) GetContactByID(ctx context.Context, arg sqlc.GetContactByIDParams) (sqlc.Contact, error) {
+func (m *MockQuerier) GetContactByID(ctx context.Context, arg db.GetContactByIDParams) (db.Contact, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetContactByID", ctx, arg)
-	ret0, _ := ret[0].(sqlc.Contact)
+	ret0, _ := ret[0].(db.Contact)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -57,11 +115,41 @@ func (mr *MockQuerierMockRecorder) GetContactByID(ctx, arg any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetContactByID", reflect.TypeOf((*MockQuerier)(nil).GetContactByID), ctx, arg)
 }
 
+// GetThreadByID mocks base method.
+func (m *MockQuerier) GetThreadByID(ctx context.Context, arg db.GetThreadByIDParams) (db.Thread, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetThreadByID", ctx, arg)
+	ret0, _ := ret[0].(db.Thread)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetThreadByID indicates an expected call of GetThreadByID.
+func (mr *MockQuerierMockRecorder) GetThreadByID(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetThreadByID", reflect.TypeOf((*MockQuerier)(nil).GetThreadByID), ctx, arg)
+}
+
+// ListContactMethodsByContact mocks base method.
+func (m *MockQuerier) ListContactMethodsByContact(ctx context.Context, arg db.ListContactMethodsByContactParams) ([]db.ContactMethod, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListContactMethodsByContact", ctx, arg)
+	ret0, _ := ret[0].([]db.ContactMethod)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListContactMethodsByContact indicates an expected call of ListContactMethodsByContact.
+func (mr *MockQuerierMockRecorder) ListContactMethodsByContact(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListContactMethodsByContact", reflect.TypeOf((*MockQuerier)(nil).ListContactMethodsByContact), ctx, arg)
+}
+
 // ListContacts mocks base method.
-func (m *MockQuerier) ListContacts(ctx context.Context, userID uuid.UUID) ([]sqlc.Contact, error) {
+func (m *MockQuerier) ListContacts(ctx context.Context, userID uuid.UUID) ([]db.Contact, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListContacts", ctx, userID)
-	ret0, _ := ret[0].([]sqlc.Contact)
+	ret0, _ := ret[0].([]db.Contact)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -73,10 +161,10 @@ func (mr *MockQuerierMockRecorder) ListContacts(ctx, userID any) *gomock.Call {
 }
 
 // ListContactsByName mocks base method.
-func (m *MockQuerier) ListContactsByName(ctx context.Context, arg sqlc.ListContactsByNameParams) ([]sqlc.Contact, error) {
+func (m *MockQuerier) ListContactsByName(ctx context.Context, arg db.ListContactsByNameParams) ([]db.Contact, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListContactsByName", ctx, arg)
-	ret0, _ := ret[0].([]sqlc.Contact)
+	ret0, _ := ret[0].([]db.Contact)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -85,4 +173,34 @@ func (m *MockQuerier) ListContactsByName(ctx context.Context, arg sqlc.ListConta
 func (mr *MockQuerierMockRecorder) ListContactsByName(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListContactsByName", reflect.TypeOf((*MockQuerier)(nil).ListContactsByName), ctx, arg)
+}
+
+// ListThreadsByContact mocks base method.
+func (m *MockQuerier) ListThreadsByContact(ctx context.Context, arg db.ListThreadsByContactParams) ([]db.Thread, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListThreadsByContact", ctx, arg)
+	ret0, _ := ret[0].([]db.Thread)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListThreadsByContact indicates an expected call of ListThreadsByContact.
+func (mr *MockQuerierMockRecorder) ListThreadsByContact(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListThreadsByContact", reflect.TypeOf((*MockQuerier)(nil).ListThreadsByContact), ctx, arg)
+}
+
+// UpdateContact mocks base method.
+func (m *MockQuerier) UpdateContact(ctx context.Context, arg db.UpdateContactParams) (db.Contact, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateContact", ctx, arg)
+	ret0, _ := ret[0].(db.Contact)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateContact indicates an expected call of UpdateContact.
+func (mr *MockQuerierMockRecorder) UpdateContact(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateContact", reflect.TypeOf((*MockQuerier)(nil).UpdateContact), ctx, arg)
 }

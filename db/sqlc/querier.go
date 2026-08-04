@@ -11,9 +11,17 @@ import (
 )
 
 type Querier interface {
+	ArchiveContact(ctx context.Context, arg ArchiveContactParams) error
+	CreateContact(ctx context.Context, arg CreateContactParams) (Contact, error)
+	CreateContactMethod(ctx context.Context, arg CreateContactMethodParams) (ContactMethod, error)
+	DeleteContactMethod(ctx context.Context, arg DeleteContactMethodParams) error
 	GetContactByID(ctx context.Context, arg GetContactByIDParams) (Contact, error)
+	GetThreadByID(ctx context.Context, arg GetThreadByIDParams) (Thread, error)
+	ListContactMethodsByContact(ctx context.Context, arg ListContactMethodsByContactParams) ([]ContactMethod, error)
 	ListContacts(ctx context.Context, userID uuid.UUID) ([]Contact, error)
 	ListContactsByName(ctx context.Context, arg ListContactsByNameParams) ([]Contact, error)
+	ListThreadsByContact(ctx context.Context, arg ListThreadsByContactParams) ([]Thread, error)
+	UpdateContact(ctx context.Context, arg UpdateContactParams) (Contact, error)
 }
 
 var _ Querier = (*Queries)(nil)

@@ -9,7 +9,51 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
+
+const archiveContact = `-- name: ArchiveContact :exec
+UPDATE contacts
+SET status = 'archived', updated_at = now()
+WHERE id = $1 AND user_id = $2
+`
+
+type ArchiveContactParams struct {
+	ID     uuid.UUID
+	UserID uuid.UUID
+}
+
+func (q *Queries) ArchiveContact(ctx context.Context, arg ArchiveContactParams) error {
+	_, err := q.db.Exec(ctx, archiveContact, arg.ID, arg.UserID)
+	return err
+}
+
+const createContact = `-- name: CreateContact :one
+INSERT INTO contacts (name, role, user_id)
+VALUES ($1, $2, $3)
+RETURNING id, name, role, status, created_at, updated_at, user_id
+`
+
+type CreateContactParams struct {
+	Name   string
+	Role   pgtype.Text
+	UserID uuid.UUID
+}
+
+func (q *Queries) CreateContact(ctx context.Context, arg CreateContactParams) (Contact, error) {
+	row := q.db.QueryRow(ctx, createContact, arg.Name, arg.Role, arg.UserID)
+	var i Contact
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Role,
+		&i.Status,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.UserID,
+	)
+	return i, err
+}
 
 const getContactByID = `-- name: GetContactByID :one
 SELECT id, name, role, status, created_at, updated_at, user_id
@@ -108,4 +152,38 @@ func (q *Queries) ListContactsByName(ctx context.Context, arg ListContactsByName
 		return nil, err
 	}
 	return items, nil
+}
+
+const updateContact = `-- name: UpdateContact :one
+UPDATE contacts
+SET name = $1, role = $2, updated_at = now()
+WHERE id = $3 AND user_id = $4
+RETURNING id, name, role, status, created_at, updated_at, user_id
+`
+
+type UpdateContactParams struct {
+	Name   string
+	Role   pgtype.Text
+	ID     uuid.UUID
+	UserID uuid.UUID
+}
+
+func (q *Queries) UpdateContact(ctx context.Context, arg UpdateContactParams) (Contact, error) {
+	row := q.db.QueryRow(ctx, updateContact,
+		arg.Name,
+		arg.Role,
+		arg.ID,
+		arg.UserID,
+	)
+	var i Contact
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Role,
+		&i.Status,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.UserID,
+	)
+	return i, err
 }

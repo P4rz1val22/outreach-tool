@@ -169,6 +169,14 @@ type Contact struct {
 	UserID    uuid.UUID
 }
 
+type ContactMethod struct {
+	ID        uuid.UUID
+	ContactID uuid.UUID
+	Type      string
+	Value     string
+	CreatedAt pgtype.Timestamptz
+}
+
 type ContactTag struct {
 	ContactID uuid.UUID
 	TagID     uuid.UUID
@@ -186,7 +194,7 @@ type Thread struct {
 	Label               string
 	CadenceIntervalDays pgtype.Int4
 	Status              ThreadStatus
-	CampaignID          uuid.UUID
+	CampaignID          *uuid.UUID
 	EmailEnabled        pgtype.Bool
 	PushEnabled         pgtype.Bool
 	CreatedAt           pgtype.Timestamptz
