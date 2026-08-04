@@ -11,16 +11,24 @@ import (
 )
 
 type Querier interface {
+	AddTagToContact(ctx context.Context, arg AddTagToContactParams) error
+	AddTagToThread(ctx context.Context, arg AddTagToThreadParams) error
 	ArchiveContact(ctx context.Context, arg ArchiveContactParams) error
 	CreateContact(ctx context.Context, arg CreateContactParams) (Contact, error)
 	CreateContactMethod(ctx context.Context, arg CreateContactMethodParams) (ContactMethod, error)
+	CreateTag(ctx context.Context, arg CreateTagParams) (Tag, error)
 	DeleteContactMethod(ctx context.Context, arg DeleteContactMethodParams) error
 	GetContactByID(ctx context.Context, arg GetContactByIDParams) (Contact, error)
 	GetThreadByID(ctx context.Context, arg GetThreadByIDParams) (Thread, error)
 	ListContactMethodsByContact(ctx context.Context, arg ListContactMethodsByContactParams) ([]ContactMethod, error)
 	ListContacts(ctx context.Context, userID uuid.UUID) ([]Contact, error)
 	ListContactsByName(ctx context.Context, arg ListContactsByNameParams) ([]Contact, error)
+	ListTags(ctx context.Context, userID uuid.UUID) ([]Tag, error)
+	ListTagsForContact(ctx context.Context, arg ListTagsForContactParams) ([]Tag, error)
+	ListTagsForThread(ctx context.Context, arg ListTagsForThreadParams) ([]Tag, error)
 	ListThreadsByContact(ctx context.Context, arg ListThreadsByContactParams) ([]Thread, error)
+	RemoveTagFromContact(ctx context.Context, arg RemoveTagFromContactParams) error
+	RemoveTagFromThread(ctx context.Context, arg RemoveTagFromThreadParams) error
 	UpdateContact(ctx context.Context, arg UpdateContactParams) (Contact, error)
 }
 

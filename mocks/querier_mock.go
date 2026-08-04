@@ -42,6 +42,34 @@ func (m *MockQuerier) EXPECT() *MockQuerierMockRecorder {
 	return m.recorder
 }
 
+// AddTagToContact mocks base method.
+func (m *MockQuerier) AddTagToContact(ctx context.Context, arg db.AddTagToContactParams) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddTagToContact", ctx, arg)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AddTagToContact indicates an expected call of AddTagToContact.
+func (mr *MockQuerierMockRecorder) AddTagToContact(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddTagToContact", reflect.TypeOf((*MockQuerier)(nil).AddTagToContact), ctx, arg)
+}
+
+// AddTagToThread mocks base method.
+func (m *MockQuerier) AddTagToThread(ctx context.Context, arg db.AddTagToThreadParams) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddTagToThread", ctx, arg)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AddTagToThread indicates an expected call of AddTagToThread.
+func (mr *MockQuerierMockRecorder) AddTagToThread(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddTagToThread", reflect.TypeOf((*MockQuerier)(nil).AddTagToThread), ctx, arg)
+}
+
 // ArchiveContact mocks base method.
 func (m *MockQuerier) ArchiveContact(ctx context.Context, arg db.ArchiveContactParams) error {
 	m.ctrl.T.Helper()
@@ -84,6 +112,21 @@ func (m *MockQuerier) CreateContactMethod(ctx context.Context, arg db.CreateCont
 func (mr *MockQuerierMockRecorder) CreateContactMethod(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateContactMethod", reflect.TypeOf((*MockQuerier)(nil).CreateContactMethod), ctx, arg)
+}
+
+// CreateTag mocks base method.
+func (m *MockQuerier) CreateTag(ctx context.Context, arg db.CreateTagParams) (db.Tag, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateTag", ctx, arg)
+	ret0, _ := ret[0].(db.Tag)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateTag indicates an expected call of CreateTag.
+func (mr *MockQuerierMockRecorder) CreateTag(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTag", reflect.TypeOf((*MockQuerier)(nil).CreateTag), ctx, arg)
 }
 
 // DeleteContactMethod mocks base method.
@@ -175,6 +218,51 @@ func (mr *MockQuerierMockRecorder) ListContactsByName(ctx, arg any) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListContactsByName", reflect.TypeOf((*MockQuerier)(nil).ListContactsByName), ctx, arg)
 }
 
+// ListTags mocks base method.
+func (m *MockQuerier) ListTags(ctx context.Context, userID uuid.UUID) ([]db.Tag, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListTags", ctx, userID)
+	ret0, _ := ret[0].([]db.Tag)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListTags indicates an expected call of ListTags.
+func (mr *MockQuerierMockRecorder) ListTags(ctx, userID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTags", reflect.TypeOf((*MockQuerier)(nil).ListTags), ctx, userID)
+}
+
+// ListTagsForContact mocks base method.
+func (m *MockQuerier) ListTagsForContact(ctx context.Context, arg db.ListTagsForContactParams) ([]db.Tag, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListTagsForContact", ctx, arg)
+	ret0, _ := ret[0].([]db.Tag)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListTagsForContact indicates an expected call of ListTagsForContact.
+func (mr *MockQuerierMockRecorder) ListTagsForContact(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTagsForContact", reflect.TypeOf((*MockQuerier)(nil).ListTagsForContact), ctx, arg)
+}
+
+// ListTagsForThread mocks base method.
+func (m *MockQuerier) ListTagsForThread(ctx context.Context, arg db.ListTagsForThreadParams) ([]db.Tag, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListTagsForThread", ctx, arg)
+	ret0, _ := ret[0].([]db.Tag)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListTagsForThread indicates an expected call of ListTagsForThread.
+func (mr *MockQuerierMockRecorder) ListTagsForThread(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTagsForThread", reflect.TypeOf((*MockQuerier)(nil).ListTagsForThread), ctx, arg)
+}
+
 // ListThreadsByContact mocks base method.
 func (m *MockQuerier) ListThreadsByContact(ctx context.Context, arg db.ListThreadsByContactParams) ([]db.Thread, error) {
 	m.ctrl.T.Helper()
@@ -188,6 +276,34 @@ func (m *MockQuerier) ListThreadsByContact(ctx context.Context, arg db.ListThrea
 func (mr *MockQuerierMockRecorder) ListThreadsByContact(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListThreadsByContact", reflect.TypeOf((*MockQuerier)(nil).ListThreadsByContact), ctx, arg)
+}
+
+// RemoveTagFromContact mocks base method.
+func (m *MockQuerier) RemoveTagFromContact(ctx context.Context, arg db.RemoveTagFromContactParams) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RemoveTagFromContact", ctx, arg)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RemoveTagFromContact indicates an expected call of RemoveTagFromContact.
+func (mr *MockQuerierMockRecorder) RemoveTagFromContact(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveTagFromContact", reflect.TypeOf((*MockQuerier)(nil).RemoveTagFromContact), ctx, arg)
+}
+
+// RemoveTagFromThread mocks base method.
+func (m *MockQuerier) RemoveTagFromThread(ctx context.Context, arg db.RemoveTagFromThreadParams) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RemoveTagFromThread", ctx, arg)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RemoveTagFromThread indicates an expected call of RemoveTagFromThread.
+func (mr *MockQuerierMockRecorder) RemoveTagFromThread(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveTagFromThread", reflect.TypeOf((*MockQuerier)(nil).RemoveTagFromThread), ctx, arg)
 }
 
 // UpdateContact mocks base method.
