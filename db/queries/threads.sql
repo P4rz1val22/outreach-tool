@@ -19,3 +19,11 @@ SELECT threads.*
 FROM threads
 JOIN contacts ON contacts.id = threads.contact_id
 WHERE threads.id = $1 AND contacts.user_id = $2;
+
+-- name: ArchiveThread :exec
+UPDATE threads
+SET status = 'archived'
+FROM contacts
+WHERE threads.id = $1
+  AND threads.contact_id = contacts.id
+  AND contacts.user_id = $2;
