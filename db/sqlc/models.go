@@ -192,7 +192,7 @@ type Thread struct {
 	ID                  uuid.UUID
 	ContactID           uuid.UUID
 	Label               string
-	CadenceIntervalDays pgtype.Int4
+	CadenceIntervalDays *int32
 	Status              ThreadStatus
 	CampaignID          *uuid.UUID
 	EmailEnabled        pgtype.Bool

@@ -14,11 +14,14 @@ type Querier interface {
 	AddTagToContact(ctx context.Context, arg AddTagToContactParams) error
 	AddTagToThread(ctx context.Context, arg AddTagToThreadParams) error
 	ArchiveContact(ctx context.Context, arg ArchiveContactParams) error
+	ArchiveThread(ctx context.Context, arg ArchiveThreadParams) error
+	CreateCheckIn(ctx context.Context, arg CreateCheckInParams) (CheckIn, error)
 	CreateContact(ctx context.Context, arg CreateContactParams) (Contact, error)
 	CreateContactMethod(ctx context.Context, arg CreateContactMethodParams) (ContactMethod, error)
 	CreateTag(ctx context.Context, arg CreateTagParams) (Tag, error)
 	DeleteContactMethod(ctx context.Context, arg DeleteContactMethodParams) error
 	GetContactByID(ctx context.Context, arg GetContactByIDParams) (Contact, error)
+	GetCurrentPendingCheckIn(ctx context.Context, arg GetCurrentPendingCheckInParams) (CheckIn, error)
 	GetThreadByID(ctx context.Context, arg GetThreadByIDParams) (Thread, error)
 	ListContactMethodsByContact(ctx context.Context, arg ListContactMethodsByContactParams) ([]ContactMethod, error)
 	ListContacts(ctx context.Context, userID uuid.UUID) ([]Contact, error)
@@ -29,6 +32,7 @@ type Querier interface {
 	ListThreadsByContact(ctx context.Context, arg ListThreadsByContactParams) ([]Thread, error)
 	RemoveTagFromContact(ctx context.Context, arg RemoveTagFromContactParams) error
 	RemoveTagFromThread(ctx context.Context, arg RemoveTagFromThreadParams) error
+	ResolveCheckIn(ctx context.Context, arg ResolveCheckInParams) (CheckIn, error)
 	UpdateContact(ctx context.Context, arg UpdateContactParams) (Contact, error)
 }
 

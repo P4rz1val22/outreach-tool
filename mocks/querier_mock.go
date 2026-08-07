@@ -84,6 +84,35 @@ func (mr *MockQuerierMockRecorder) ArchiveContact(ctx, arg any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ArchiveContact", reflect.TypeOf((*MockQuerier)(nil).ArchiveContact), ctx, arg)
 }
 
+// ArchiveThread mocks base method.
+func (m *MockQuerier) ArchiveThread(ctx context.Context, arg db.ArchiveThreadParams) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ArchiveThread", ctx, arg)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// ArchiveThread indicates an expected call of ArchiveThread.
+func (mr *MockQuerierMockRecorder) ArchiveThread(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ArchiveThread", reflect.TypeOf((*MockQuerier)(nil).ArchiveThread), ctx, arg)
+}
+
+// CreateCheckIn mocks base method.
+func (m *MockQuerier) CreateCheckIn(ctx context.Context, arg db.CreateCheckInParams) (db.CheckIn, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateCheckIn", ctx, arg)
+	ret0, _ := ret[0].(db.CheckIn)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateCheckIn indicates an expected call of CreateCheckIn.
+func (mr *MockQuerierMockRecorder) CreateCheckIn(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateCheckIn", reflect.TypeOf((*MockQuerier)(nil).CreateCheckIn), ctx, arg)
+}
+
 // CreateContact mocks base method.
 func (m *MockQuerier) CreateContact(ctx context.Context, arg db.CreateContactParams) (db.Contact, error) {
 	m.ctrl.T.Helper()
@@ -156,6 +185,21 @@ func (m *MockQuerier) GetContactByID(ctx context.Context, arg db.GetContactByIDP
 func (mr *MockQuerierMockRecorder) GetContactByID(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetContactByID", reflect.TypeOf((*MockQuerier)(nil).GetContactByID), ctx, arg)
+}
+
+// GetCurrentPendingCheckIn mocks base method.
+func (m *MockQuerier) GetCurrentPendingCheckIn(ctx context.Context, arg db.GetCurrentPendingCheckInParams) (db.CheckIn, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCurrentPendingCheckIn", ctx, arg)
+	ret0, _ := ret[0].(db.CheckIn)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCurrentPendingCheckIn indicates an expected call of GetCurrentPendingCheckIn.
+func (mr *MockQuerierMockRecorder) GetCurrentPendingCheckIn(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCurrentPendingCheckIn", reflect.TypeOf((*MockQuerier)(nil).GetCurrentPendingCheckIn), ctx, arg)
 }
 
 // GetThreadByID mocks base method.
@@ -304,6 +348,21 @@ func (m *MockQuerier) RemoveTagFromThread(ctx context.Context, arg db.RemoveTagF
 func (mr *MockQuerierMockRecorder) RemoveTagFromThread(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveTagFromThread", reflect.TypeOf((*MockQuerier)(nil).RemoveTagFromThread), ctx, arg)
+}
+
+// ResolveCheckIn mocks base method.
+func (m *MockQuerier) ResolveCheckIn(ctx context.Context, arg db.ResolveCheckInParams) (db.CheckIn, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ResolveCheckIn", ctx, arg)
+	ret0, _ := ret[0].(db.CheckIn)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ResolveCheckIn indicates an expected call of ResolveCheckIn.
+func (mr *MockQuerierMockRecorder) ResolveCheckIn(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ResolveCheckIn", reflect.TypeOf((*MockQuerier)(nil).ResolveCheckIn), ctx, arg)
 }
 
 // UpdateContact mocks base method.

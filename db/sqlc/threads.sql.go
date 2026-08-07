@@ -11,6 +11,25 @@ import (
 	"github.com/google/uuid"
 )
 
+const archiveThread = `-- name: ArchiveThread :exec
+UPDATE threads
+SET status = 'archived'
+FROM contacts
+WHERE threads.id = $1
+  AND threads.contact_id = contacts.id
+  AND contacts.user_id = $2
+`
+
+type ArchiveThreadParams struct {
+	ID     uuid.UUID
+	UserID uuid.UUID
+}
+
+func (q *Queries) ArchiveThread(ctx context.Context, arg ArchiveThreadParams) error {
+	_, err := q.db.Exec(ctx, archiveThread, arg.ID, arg.UserID)
+	return err
+}
+
 const getThreadByID = `-- name: GetThreadByID :one
 SELECT threads.id, threads.contact_id, threads.label, threads.cadence_interval_days, threads.status, threads.campaign_id, threads.email_enabled, threads.push_enabled, threads.created_at
 FROM threads
