@@ -9,11 +9,12 @@ import (
 )
 
 type ThreadRepo struct {
-	q db.Querier
+	q  db.Querier
+	tx TxRunner
 }
 
-func NewThreadRepo(q db.Querier) *ThreadRepo {
-	return &ThreadRepo{q: q}
+func NewThreadRepo(q db.Querier, tx TxRunner) *ThreadRepo {
+	return &ThreadRepo{q: q, tx: tx}
 }
 
 func (r *ThreadRepo) GetByID(ctx context.Context, id uuid.UUID) (db.Thread, error) {
@@ -43,5 +44,46 @@ func (r *ThreadRepo) ListByContact(ctx context.Context, contactID uuid.UUID, sta
 		UserID:    userID,
 		Status:    nullStatus,
 		TagID:     tagID,
+	})
+}
+
+func (r *ThreadRepo) CompleteCheckIn(ctx context.Context, checkInID uuid.UUID) error {
+	return r.resolveCheckIn(ctx, checkInID, db.CheckinStatusCompleted)
+}
+
+func (r *ThreadRepo) SkipCheckIn(ctx context.Context, checkInID uuid.UUID) error {
+	return r.resolveCheckIn(ctx, checkInID, db.CheckinStatusSkipped)
+}
+
+func (r *ThreadRepo) resolveCheckIn(ctx context.Context, checkInID uuid.UUID, status db.CheckinStatus) error {
+	userID, err := auth.UserIDFromContext(ctx)
+	if err != nil {
+		return err
+	}
+
+	return r.tx.RunTx(ctx, func(qtx db.Querier) error {
+		resolved, err := qtx.ResolveCheckIn(ctx, db.ResolveCheckInParams{
+			ID: checkInID, Status: status, UserID: userID,
+		})
+		if err != nil {
+			return err
+		}
+
+		thread, err := qtx.GetThreadByID(ctx, db.GetThreadByIDParams{
+			ID: resolved.ThreadID, UserID: userID,
+		})
+		if err != nil {
+			return err
+		}
+
+		if thread.CadenceIntervalDays == nil {
+			return qtx.ArchiveThread(ctx, db.ArchiveThreadParams{ID: thread.ID, UserID: userID})
+		}
+
+		nextDeadline := addDays(resolved.Deadline, int(*thread.CadenceIntervalDays))
+		_, err = qtx.CreateCheckIn(ctx, db.CreateCheckInParams{
+			ThreadID: thread.ID, Date: resolved.Deadline, Deadline: nextDeadline,
+		})
+		return err
 	})
 }

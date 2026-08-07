@@ -81,3 +81,129 @@ func TestTagRepo_AddToContact(t *testing.T) {
 		t.Fatalf("unexpected error: %v", err)
 	}
 }
+
+func TestTagRepo_RemoveFromContact(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	mockQuerier := mocks.NewMockQuerier(ctrl)
+
+	userID := uuid.New()
+	contactID := uuid.New()
+	tagID := uuid.New()
+
+	mockQuerier.EXPECT().
+		RemoveTagFromContact(gomock.Any(), db.RemoveTagFromContactParams{
+			ContactID: contactID,
+			TagID:     tagID,
+			UserID:    userID,
+		}).
+		Return(nil)
+
+	repo := repository.NewTagRepo(mockQuerier)
+	ctx := auth.WithUserID(context.Background(), userID)
+
+	if err := repo.RemoveFromContact(ctx, contactID, tagID); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+}
+
+func TestTagRepo_ListForContact(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	mockQuerier := mocks.NewMockQuerier(ctrl)
+
+	userID := uuid.New()
+	contactID := uuid.New()
+	expected := []db.Tag{{Name: "urgent"}}
+
+	mockQuerier.EXPECT().
+		ListTagsForContact(gomock.Any(), db.ListTagsForContactParams{
+			ContactID: contactID,
+			UserID:    userID,
+		}).
+		Return(expected, nil)
+
+	repo := repository.NewTagRepo(mockQuerier)
+	ctx := auth.WithUserID(context.Background(), userID)
+
+	result, err := repo.ListForContact(ctx, contactID)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if len(result) != 1 {
+		t.Errorf("got %d tags, want 1", len(result))
+	}
+}
+
+func TestTagRepo_AddToThread(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	mockQuerier := mocks.NewMockQuerier(ctrl)
+
+	userID := uuid.New()
+	threadID := uuid.New()
+	tagID := uuid.New()
+
+	mockQuerier.EXPECT().
+		AddTagToThread(gomock.Any(), db.AddTagToThreadParams{
+			ThreadID: threadID,
+			TagID:    tagID,
+			UserID:   userID,
+		}).
+		Return(nil)
+
+	repo := repository.NewTagRepo(mockQuerier)
+	ctx := auth.WithUserID(context.Background(), userID)
+
+	if err := repo.AddToThread(ctx, threadID, tagID); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+}
+
+func TestTagRepo_RemoveFromThread(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	mockQuerier := mocks.NewMockQuerier(ctrl)
+
+	userID := uuid.New()
+	threadID := uuid.New()
+	tagID := uuid.New()
+
+	mockQuerier.EXPECT().
+		RemoveTagFromThread(gomock.Any(), db.RemoveTagFromThreadParams{
+			ThreadID: threadID,
+			TagID:    tagID,
+			UserID:   userID,
+		}).
+		Return(nil)
+
+	repo := repository.NewTagRepo(mockQuerier)
+	ctx := auth.WithUserID(context.Background(), userID)
+
+	if err := repo.RemoveFromThread(ctx, threadID, tagID); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+}
+
+func TestTagRepo_ListForThread(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	mockQuerier := mocks.NewMockQuerier(ctrl)
+
+	userID := uuid.New()
+	threadID := uuid.New()
+	expected := []db.Tag{{Name: "urgent"}}
+
+	mockQuerier.EXPECT().
+		ListTagsForThread(gomock.Any(), db.ListTagsForThreadParams{
+			ThreadID: threadID,
+			UserID:   userID,
+		}).
+		Return(expected, nil)
+
+	repo := repository.NewTagRepo(mockQuerier)
+	ctx := auth.WithUserID(context.Background(), userID)
+
+	result, err := repo.ListForThread(ctx, threadID)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if len(result) != 1 {
+		t.Errorf("got %d tags, want 1", len(result))
+	}
+}
