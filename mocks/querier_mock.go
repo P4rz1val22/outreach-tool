@@ -158,6 +158,21 @@ func (mr *MockQuerierMockRecorder) CreateTag(ctx, arg any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTag", reflect.TypeOf((*MockQuerier)(nil).CreateTag), ctx, arg)
 }
 
+// CreateThread mocks base method.
+func (m *MockQuerier) CreateThread(ctx context.Context, arg db.CreateThreadParams) (db.Thread, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateThread", ctx, arg)
+	ret0, _ := ret[0].(db.Thread)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateThread indicates an expected call of CreateThread.
+func (mr *MockQuerierMockRecorder) CreateThread(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateThread", reflect.TypeOf((*MockQuerier)(nil).CreateThread), ctx, arg)
+}
+
 // DeleteContactMethod mocks base method.
 func (m *MockQuerier) DeleteContactMethod(ctx context.Context, arg db.DeleteContactMethodParams) error {
 	m.ctrl.T.Helper()
@@ -200,6 +215,21 @@ func (m *MockQuerier) GetCurrentPendingCheckIn(ctx context.Context, arg db.GetCu
 func (mr *MockQuerierMockRecorder) GetCurrentPendingCheckIn(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCurrentPendingCheckIn", reflect.TypeOf((*MockQuerier)(nil).GetCurrentPendingCheckIn), ctx, arg)
+}
+
+// GetThreadByCheckInID mocks base method.
+func (m *MockQuerier) GetThreadByCheckInID(ctx context.Context, arg db.GetThreadByCheckInIDParams) (db.Thread, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetThreadByCheckInID", ctx, arg)
+	ret0, _ := ret[0].(db.Thread)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetThreadByCheckInID indicates an expected call of GetThreadByCheckInID.
+func (mr *MockQuerierMockRecorder) GetThreadByCheckInID(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetThreadByCheckInID", reflect.TypeOf((*MockQuerier)(nil).GetThreadByCheckInID), ctx, arg)
 }
 
 // GetThreadByID mocks base method.
@@ -348,6 +378,21 @@ func (m *MockQuerier) RemoveTagFromThread(ctx context.Context, arg db.RemoveTagF
 func (mr *MockQuerierMockRecorder) RemoveTagFromThread(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveTagFromThread", reflect.TypeOf((*MockQuerier)(nil).RemoveTagFromThread), ctx, arg)
+}
+
+// RescheduleCheckIn mocks base method.
+func (m *MockQuerier) RescheduleCheckIn(ctx context.Context, arg db.RescheduleCheckInParams) (db.CheckIn, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RescheduleCheckIn", ctx, arg)
+	ret0, _ := ret[0].(db.CheckIn)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RescheduleCheckIn indicates an expected call of RescheduleCheckIn.
+func (mr *MockQuerierMockRecorder) RescheduleCheckIn(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RescheduleCheckIn", reflect.TypeOf((*MockQuerier)(nil).RescheduleCheckIn), ctx, arg)
 }
 
 // ResolveCheckIn mocks base method.

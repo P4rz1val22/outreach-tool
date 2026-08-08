@@ -30,6 +30,65 @@ func (q *Queries) ArchiveThread(ctx context.Context, arg ArchiveThreadParams) er
 	return err
 }
 
+const createThread = `-- name: CreateThread :one
+INSERT INTO threads (contact_id, label, cadence_interval_days)
+VALUES ($1, $2, $3)
+RETURNING id, contact_id, label, cadence_interval_days, status, campaign_id, email_enabled, push_enabled, created_at
+`
+
+type CreateThreadParams struct {
+	ContactID           uuid.UUID
+	Label               string
+	CadenceIntervalDays *int32
+}
+
+func (q *Queries) CreateThread(ctx context.Context, arg CreateThreadParams) (Thread, error) {
+	row := q.db.QueryRow(ctx, createThread, arg.ContactID, arg.Label, arg.CadenceIntervalDays)
+	var i Thread
+	err := row.Scan(
+		&i.ID,
+		&i.ContactID,
+		&i.Label,
+		&i.CadenceIntervalDays,
+		&i.Status,
+		&i.CampaignID,
+		&i.EmailEnabled,
+		&i.PushEnabled,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
+const getThreadByCheckInID = `-- name: GetThreadByCheckInID :one
+SELECT threads.id, threads.contact_id, threads.label, threads.cadence_interval_days, threads.status, threads.campaign_id, threads.email_enabled, threads.push_enabled, threads.created_at
+FROM threads
+JOIN check_ins ON check_ins.thread_id = threads.id
+JOIN contacts ON contacts.id = threads.contact_id
+WHERE check_ins.id = $1 AND contacts.user_id = $2
+`
+
+type GetThreadByCheckInIDParams struct {
+	ID     uuid.UUID
+	UserID uuid.UUID
+}
+
+func (q *Queries) GetThreadByCheckInID(ctx context.Context, arg GetThreadByCheckInIDParams) (Thread, error) {
+	row := q.db.QueryRow(ctx, getThreadByCheckInID, arg.ID, arg.UserID)
+	var i Thread
+	err := row.Scan(
+		&i.ID,
+		&i.ContactID,
+		&i.Label,
+		&i.CadenceIntervalDays,
+		&i.Status,
+		&i.CampaignID,
+		&i.EmailEnabled,
+		&i.PushEnabled,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
 const getThreadByID = `-- name: GetThreadByID :one
 SELECT threads.id, threads.contact_id, threads.label, threads.cadence_interval_days, threads.status, threads.campaign_id, threads.email_enabled, threads.push_enabled, threads.created_at
 FROM threads

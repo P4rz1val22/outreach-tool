@@ -69,6 +69,45 @@ func (q *Queries) GetCurrentPendingCheckIn(ctx context.Context, arg GetCurrentPe
 	return i, err
 }
 
+const rescheduleCheckIn = `-- name: RescheduleCheckIn :one
+UPDATE check_ins
+SET date = $2, deadline = $3
+FROM threads, contacts
+WHERE check_ins.id = $1
+  AND check_ins.thread_id = threads.id
+  AND threads.contact_id = contacts.id
+  AND contacts.user_id = $4
+  AND check_ins.status = 'pending'
+RETURNING check_ins.id, check_ins.thread_id, check_ins.date, check_ins.deadline, check_ins.status, check_ins.resolved_at, check_ins.created_at
+`
+
+type RescheduleCheckInParams struct {
+	ID       uuid.UUID
+	Date     pgtype.Date
+	Deadline pgtype.Date
+	UserID   uuid.UUID
+}
+
+func (q *Queries) RescheduleCheckIn(ctx context.Context, arg RescheduleCheckInParams) (CheckIn, error) {
+	row := q.db.QueryRow(ctx, rescheduleCheckIn,
+		arg.ID,
+		arg.Date,
+		arg.Deadline,
+		arg.UserID,
+	)
+	var i CheckIn
+	err := row.Scan(
+		&i.ID,
+		&i.ThreadID,
+		&i.Date,
+		&i.Deadline,
+		&i.Status,
+		&i.ResolvedAt,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
 const resolveCheckIn = `-- name: ResolveCheckIn :one
 UPDATE check_ins
 SET status = $2, resolved_at = now()

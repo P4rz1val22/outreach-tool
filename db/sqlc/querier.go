@@ -19,9 +19,11 @@ type Querier interface {
 	CreateContact(ctx context.Context, arg CreateContactParams) (Contact, error)
 	CreateContactMethod(ctx context.Context, arg CreateContactMethodParams) (ContactMethod, error)
 	CreateTag(ctx context.Context, arg CreateTagParams) (Tag, error)
+	CreateThread(ctx context.Context, arg CreateThreadParams) (Thread, error)
 	DeleteContactMethod(ctx context.Context, arg DeleteContactMethodParams) error
 	GetContactByID(ctx context.Context, arg GetContactByIDParams) (Contact, error)
 	GetCurrentPendingCheckIn(ctx context.Context, arg GetCurrentPendingCheckInParams) (CheckIn, error)
+	GetThreadByCheckInID(ctx context.Context, arg GetThreadByCheckInIDParams) (Thread, error)
 	GetThreadByID(ctx context.Context, arg GetThreadByIDParams) (Thread, error)
 	ListContactMethodsByContact(ctx context.Context, arg ListContactMethodsByContactParams) ([]ContactMethod, error)
 	ListContacts(ctx context.Context, userID uuid.UUID) ([]Contact, error)
@@ -32,6 +34,7 @@ type Querier interface {
 	ListThreadsByContact(ctx context.Context, arg ListThreadsByContactParams) ([]Thread, error)
 	RemoveTagFromContact(ctx context.Context, arg RemoveTagFromContactParams) error
 	RemoveTagFromThread(ctx context.Context, arg RemoveTagFromThreadParams) error
+	RescheduleCheckIn(ctx context.Context, arg RescheduleCheckInParams) (CheckIn, error)
 	ResolveCheckIn(ctx context.Context, arg ResolveCheckInParams) (CheckIn, error)
 	UpdateContact(ctx context.Context, arg UpdateContactParams) (Contact, error)
 }
