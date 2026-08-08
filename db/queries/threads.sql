@@ -1,3 +1,14 @@
+-- name: GetThreadByID :one
+SELECT threads.*
+FROM threads
+JOIN contacts ON contacts.id = threads.contact_id
+WHERE threads.id = $1 AND contacts.user_id = $2;
+
+-- name: CreateThread :one
+INSERT INTO threads (contact_id, label, cadence_interval_days)
+VALUES ($1, $2, $3)
+RETURNING *;
+
 -- name: ListThreadsByContact :many
 SELECT threads.*
 FROM threads
@@ -14,11 +25,12 @@ WHERE threads.contact_id = $1
     )
 );
 
--- name: GetThreadByID :one
+-- name: GetThreadByCheckInID :one
 SELECT threads.*
 FROM threads
+JOIN check_ins ON check_ins.thread_id = threads.id
 JOIN contacts ON contacts.id = threads.contact_id
-WHERE threads.id = $1 AND contacts.user_id = $2;
+WHERE check_ins.id = $1 AND contacts.user_id = $2;
 
 -- name: ArchiveThread :exec
 UPDATE threads
